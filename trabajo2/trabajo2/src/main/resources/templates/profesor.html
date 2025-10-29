@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title> Punto 1 : Profesor y Estudiantes</title>
+    <style>
+
+    </style>
+</head>
+<body>
+
+<h1>Punto 1 : Profesor y Estudiantes</h1>
+
+<div class="profesor-info" th:if="${profesor != null}">
+    <p><strong>Nombre:</strong> <span th:text="${profesor.nombre}"></span></p>
+    <p><strong>Categoría:</strong> <span th:text="${profesor.categoria}"></span></p>
+    <p><strong>Carrera:</strong> <span th:text="${profesor.carrera}"></span></p>
+</div>
+
+<h2>Estudiantes del mismo grupo </h2>
+
+<div th:if="${#lists.isEmpty(grupoProfesor)}">
+    <p class="no-estudiantes">No hay estudiantes que compartan categoría y carrera con el profesor.</p>
+</div>
+
+<div th:if="${!#lists.isEmpty(grupoProfesor)}">
+    <table>
+        <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Categoría</th>
+            <th>Carrera</th>
+            <th>Notas</th>
+            <th>Promedio</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="estudiante : ${grupoProfesor}">
+            <td th:text="${estudiante.nombre}"></td>
+            <td th:text="${estudiante.categoria}"></td>
+            <td th:text="${estudiante.carrera}"></td>
+            <td th:text="${estudiante.notas}"></td>
+            <td th:text="${promedios[estudiante.nombre]}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<h2>punto 2 y 3 : grupos de estudiantes </h2>
+<h2>punto 4 : notas y promedio de notas </h2>
+
+<div th:each="grupo : ${grupos}">
+    <div class="grupo">
+        <h3 th:text="${grupo.key}"></h3>
+        <table>
+            <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Categoría</th>
+                <th>Carrera</th>
+                <th>Notas</th>
+                <th>Promedio</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="estudiante : ${grupo.value}">
+                <td th:text="${estudiante.nombre}"></td>
+                <td th:text="${estudiante.categoria}"></td>
+                <td th:text="${estudiante.carrera}"></td>
+                <td th:text="${estudiante.notas}"></td>
+                <td th:text="${promedios[estudiante.nombre]}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div>
+    <h3>punto 5 : Detalle de estudiante (verNotas)</h3>
+    <p th:utext="${resultadoVerNotas}"></p>
+</div>
+
+
+</body>
+</html>
